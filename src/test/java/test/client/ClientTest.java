@@ -22,6 +22,7 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 import java.util.Properties;
 
 @ExtendWith(ArquillianExtension.class)
@@ -84,5 +85,10 @@ public class ClientTest {
         System.out.println("Status Code: " + response.statusCode());
         System.out.println("Response Body: " + response.body());
         Assertions.assertEquals(200, response.statusCode());
+
+        Optional<String> xAppNameOpt = response.headers().firstValue("X-AppName");
+        Assertions.assertTrue(xAppNameOpt.isPresent());
+        System.out.println("X-AppName: " + xAppNameOpt.get());
+        Assertions.assertEquals("descriptor-appname", xAppNameOpt.get());
     }
 }

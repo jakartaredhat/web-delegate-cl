@@ -54,12 +54,14 @@ public class TestServlet extends HttpServlet {
             String testClassName = properties.getProperty("test_classname");
             String[] arguments = (String[]) objInStream.readObject();
 
+            res.setHeader("X-AppName", appName);
             PrintWriter writer = res.getWriter();
             writer.println("Ran test_classname: " + testClassName);
             writer.println("Ran callbackBean.echo: " + callbackBean.echo(testClassName));
             writer.println("Injected appName: " + appName);
             writer.println("Ran callbackBean.getAppName: " + callbackBean.getAppName());
             writer.flush();
+
             res.setStatus(200);
         } catch (Exception e) {
             throw new ServletException("IO error", e);
