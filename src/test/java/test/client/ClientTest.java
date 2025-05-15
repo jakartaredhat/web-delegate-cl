@@ -90,5 +90,15 @@ public class ClientTest {
         Assertions.assertTrue(xAppNameOpt.isPresent());
         System.out.println("X-AppName: " + xAppNameOpt.get());
         Assertions.assertEquals("descriptor-appname", xAppNameOpt.get());
+
+        Optional<String> xModuleNameOpt = response.headers().firstValue("X-ModuleName");
+        Assertions.assertTrue(xModuleNameOpt.isPresent());
+        System.out.println("X-ModuleName: " + xModuleNameOpt.get());
+        Assertions.assertEquals("client_war", xModuleNameOpt.get());
+
+        // Other various JNDI lookups validations
+        Optional<String> xbeanGlobalLookupOpt = response.headers().firstValue("X-beanGlobalLookup");
+        Assertions.assertTrue(xbeanGlobalLookupOpt.isPresent());
+
     }
 }
